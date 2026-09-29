@@ -52,19 +52,20 @@ module alu (
                 sign = 1'b0;
                 signed_a = a;
                 if (a >= 8'd192) 
-                    signed_a = signed_a - 8'd192;
+                    signed_a = signed_a + 8'b10000000;
+                    signed_a = signed_a + 8'b11000000; // can turn into one wrapped  around addition, will fix
                 if (signed_a >= 8'd96)
-                    signed_a = signed_a - 8'd96;
+                    signed_a = signed_a + 8'b10100000;
                 if (signed_a >= 8'd48)
-                    signed_a = signed_a - 8'd48;
+                    signed_a = signed_a + 8'b11010000;
                 if (signed_a >= 8'd24)
-                    signed_a = signed_a - 8'd24;
+                    signed_a = signed_a + 8'b11101000;
                 if (signed_a >= 8'd12)
-                    signed_a = signed_a - 8'd12;
+                    signed_a = signed_a + 8'b11110100;
                 if (signed_a >= 8'd6)
-                    signed_a = signed_a - 8'd6;
+                    signed_a = signed_a + 8'b11111010;
                 if (signed_a >= 8'd3)
-                    signed_a = signed_a - 8'd3;
+                    signed_a = signed_a + 8'b11111101;
                 result = signed_a;
             end
             end
