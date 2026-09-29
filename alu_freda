@@ -11,7 +11,7 @@ module alu (
     output logic sign
     );
     
-    logic [9:0] signed_b, signed_a, result_ext; 
+    logic [9:0] signed_b, signed_a, result_ext;
     
     always_comb begin
         overflow = 1'b0;
@@ -47,9 +47,11 @@ module alu (
                 end
             end
             
-            U_MOD3: begin
+            U_MOD3, S_MOD3: begin
                 sign = 1'b0;
-                signed_a = {2'b0,a};
+                if (fn == S_MOD3 && a[7] == 1) 
+                    signed_a = {2'b1,a} + 10'd129;
+                else signed_a = {2'b0,a};
                 if (signed_a >= 10'd192) 
                     signed_a = signed_a + 10'b1101000000;
                 if (signed_a >= 10'd96)
@@ -65,7 +67,6 @@ module alu (
                 if (signed_a >= 10'd3)
                     signed_a = signed_a + 10'b1111111101;
                 result = signed_a[7:0];
-            end
             end
             
             S_ADD: begin
@@ -93,20 +94,10 @@ module alu (
                     result = result_ext[7:0];
                  end
             end
-            S_MOD3: begin
-                if (a[7]==0) begin
-                    result = a - 3*(a/3);
-                end else begin
-                    signed_a = {2'b0,~{a}} + 10'd1;
-                    result_ext = 8'(signed_a - 3*(signed_a/3));
-                    if (result_ext == 0) begin
-                        result = 0;
-                    end else begin
-                        result = 3 - result_ext;
-                    end
-                end
-            end
-            
+           
         endcase
         
     end
+            
+    
+endmodule
