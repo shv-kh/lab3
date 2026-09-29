@@ -50,7 +50,7 @@ module alu (
             U_MOD3, S_MOD3: begin
                 sign = 1'b0;
                 if (fn == S_MOD3 && a[7] == 1) 
-                    signed_a = {2'b1,a} + 10'd129;
+                    signed_a = {2'b11,a} + 10'd129;
                 else signed_a = {2'b0,a};
                 if (signed_a >= 10'd192) 
                     signed_a = signed_a + 10'b1101000000;
