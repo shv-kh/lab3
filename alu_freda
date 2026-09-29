@@ -48,8 +48,25 @@ module alu (
             end
             
             U_MOD3: begin
-                result = a - 3*(a/3);
+                U_MOD3: begin
                 sign = 1'b0;
+                signed_a = a;
+                if (a >= 8'd192) 
+                    signed_a = signed_a - 8'd192;
+                if (signed_a >= 8'd96)
+                    signed_a = signed_a - 8'd96;
+                if (signed_a >= 8'd48)
+                    signed_a = signed_a - 8'd48;
+                if (signed_a >= 8'd24)
+                    signed_a = signed_a - 8'd24;
+                if (signed_a >= 8'd12)
+                    signed_a = signed_a - 8'd12;
+                if (signed_a >= 8'd6)
+                    signed_a = signed_a - 8'd6;
+                if (signed_a >= 8'd3)
+                    signed_a = signed_a - 8'd3;
+                result = signed_a;
+            end
             end
             
             S_ADD: begin
