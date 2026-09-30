@@ -31,7 +31,7 @@ module reg_update (
                 a_next = reg_input;
             2'b01:
                 b_next = reg_input;
-            default: begin
+            default: begin //probably redundant but gave an error/warning
                 a_next = a;
                 b_next = b;
             end
