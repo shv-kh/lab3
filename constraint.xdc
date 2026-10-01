@@ -7,6 +7,22 @@ set_property PACKAGE_PIN E3 [get_ports clk]
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
 create_clock -add -name clk -period 10.00 -waveform {0 5} [get_ports clk]
 
+## Buttons
+#NET "btnCpuReset"		LOC = "C12"	| IOSTANDARD = "LVCMOS33";	
+set_property PACKAGE_PIN C12 [get_ports {rst}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {rst}]	
+#Bank = 15, Pin name = IO_L3P_T0_DQS_AD1P_15,				Sch name = CPU_RESET
+
+#NET "btnC"				LOC = "E16"	| IOSTANDARD = "LVCMOS33";		
+set_property PACKAGE_PIN E16 [get_ports {b_enter}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {b_enter}]
+#Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC
+
+#NET "btnL"				LOC = "T16"	| IOSTANDARD = "LVCMOS33";		
+set_property PACKAGE_PIN T15 [get_ports {b_sign}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {b_sign}]
+#Bank = CONFIG, Pin name = IO_L15N_T2_DQS_DOUT_CSO_B_14,	Sch name = BTNL
+
 ##7 segment display
 #Bank = 34, Pin name = IO_L2N_T0_34,						Sch name = CA
 set_property PACKAGE_PIN L3 [get_ports {seven_seg[0]}]					
