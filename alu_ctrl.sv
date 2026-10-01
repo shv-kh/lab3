@@ -49,9 +49,8 @@ module alu_ctrl (
             LOAD_A: begin
                 fn = INPUT_A;
                 reg_ctrl = 2'b01;
-                if (enter_pressed) begin
+                if (enter_pressed)
                     next_state = LOAD_B;
-                end 
             end
             
             LOAD_B:begin
@@ -64,33 +63,28 @@ module alu_ctrl (
             ADD: begin
                 if (enter_pressed) 
                     next_state = SUB;
-                if (signed_op) begin
+                if (signed_op)
                     fn = S_ADD;
-                end else begin
+                else
                     fn = U_ADD;
-                end
             end
             
             SUB: begin
-                if(enter_pressed) begin
+                if(enter_pressed)
                     next_state = MOD3;
-                end 
-                if (signed_op) begin
+                if (signed_op) 
                     fn = S_SUB;
-                end else begin
+                else 
                     fn = U_SUB;
-                end
             end
             
             MOD3: begin
-                if(enter_pressed) begin
+                if(enter_pressed) 
                     next_state = ADD;
-                end 
-                if (signed_op) begin
+                if (signed_op) 
                     fn = S_MOD3;
-                end else begin
+                else 
                     fn = U_MOD3;
-                end
             end
             
             default: begin
