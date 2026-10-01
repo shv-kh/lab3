@@ -21,25 +21,26 @@ module alu_ctrl (
     
     state_type current_state, next_state;
     
-    logic [1:0]next_reg_ctrl;
-    logic signed_op, next_signed_op;
+    logic signed_op, next_signed_op, enter_pressed, enter_prev;
     
     always_ff @(posedge clk) begin
         if (rst) begin
             current_state <= LOAD_A;
-            reg_ctrl <= 2'b0;
             signed_op <= 1'b0;
+            enter_prev <= 1'b1;
         end else begin
             current_state <= next_state;
-            reg_ctrl <= next_reg_ctrl;
             signed_op <= next_signed_op;
+            enter_prev <= enter;
         end
     end
     
     always_comb begin
-        next_reg_ctrl = reg_ctrl;
+        reg_ctrl = 2'b11;
         next_state = current_state;
         next_signed_op = signed_op;
+        
+        enter_pressed = enter && !enter_prev;
         
         if (sign)
             next_signed_op = 1;
@@ -47,21 +48,21 @@ module alu_ctrl (
         case (current_state)
             LOAD_A: begin
                 fn = INPUT_A;
-                next_reg_ctrl = 2'b01;
-                if (enter)
+                reg_ctrl = 2'b01;
+                if (enter_pressed) begin
                     next_state = LOAD_B;
+                end 
             end
             
             LOAD_B:begin
-                fn = INPUT_B;
-                next_reg_ctrl = 2'b10;
-                if (enter) 
+                fn = INPUT_B;                
+                reg_ctrl = 2'b10;
+                if (enter_pressed) 
                     next_state = ADD;
             end
             
             ADD: begin
-                next_reg_ctrl = 2'b11;
-                if (enter) 
+                if (enter_pressed) 
                     next_state = SUB;
                 if (signed_op) begin
                     fn = S_ADD;
@@ -71,8 +72,7 @@ module alu_ctrl (
             end
             
             SUB: begin
-                next_reg_ctrl = 2'b11;
-                if(enter) begin
+                if(enter_pressed) begin
                     next_state = MOD3;
                 end 
                 if (signed_op) begin
@@ -83,8 +83,7 @@ module alu_ctrl (
             end
             
             MOD3: begin
-                next_reg_ctrl = 2'b11;
-                if(enter) begin
+                if(enter_pressed) begin
                     next_state = ADD;
                 end 
                 if (signed_op) begin
@@ -96,6 +95,7 @@ module alu_ctrl (
             
             default: begin
                 fn = INPUT_A;
+                next_state = LOAD_A;
             end
           endcase
     end
