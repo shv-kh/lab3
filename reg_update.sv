@@ -27,7 +27,7 @@ module reg_update (
         b_next = b;
 
         case (reg_ctrl)
-            2'b0,2'b01: 
+            2'b01: 
                 a_next = reg_input;
             2'b10:
                 b_next = reg_input;
