@@ -27,10 +27,14 @@ module reg_update (
         b_next = b;
 
         case (reg_ctrl)
-            2'b01: 
+            2'b0,2'b01: 
                 a_next = reg_input;
             2'b10:
                 b_next = reg_input;
+            2'b11: begin
+                a_next = a;
+                b_next = b;
+            end
             default: begin //probably redundant but gave an error/warning
                 a_next = a;
                 b_next = b;
