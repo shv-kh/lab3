@@ -1,3 +1,12 @@
+## This file is a general .xdc for the Nexys4 rev B board
+## To use it in a project:
+## - uncomment the lines corresponding to used pins
+## - rename the used ports (in each line, after get_ports) according to the top level signal names in the project
+
+set_property PACKAGE_PIN E3 [get_ports clk]							
+set_property IOSTANDARD LVCMOS33 [get_ports clk]
+create_clock -add -name clk -period 10.00 -waveform {0 5} [get_ports clk]
+
 ##7 segment display
 #Bank = 34, Pin name = IO_L2N_T0_34,						Sch name = CA
 set_property PACKAGE_PIN L3 [get_ports {seven_seg[0]}]					
