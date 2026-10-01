@@ -10,7 +10,8 @@ module alu_ctrl (
     output alu_op_t fn,
     output logic [1:0] reg_ctrl
     );
-typedef enum logic [2:0] {
+    
+    typedef enum logic [2:0] {
         LOAD_A,
         LOAD_B,
         ADD,
@@ -20,47 +21,51 @@ typedef enum logic [2:0] {
     
     state_type current_state, next_state;
     
+    logic [1:0]next_reg_ctrl;
+    logic signed_op, next_signed_op;
+    
     always_ff @(posedge clk) begin
         if (rst) begin
             current_state <= LOAD_A;
+            reg_ctrl <= 2'b0;
+            signed_op <= 1'b0;
         end else begin
             current_state <= next_state;
+            reg_ctrl <= next_reg_ctrl;
+            signed_op <= next_signed_op;
         end
     end
     
     always_comb begin
-        reg_ctrl = 2'b00;
-    
+        next_reg_ctrl = reg_ctrl;
+        next_state = current_state;
+        next_signed_op = signed_op;
+        
+        if (sign)
+            next_signed_op = 1;
+         
         case (current_state)
             LOAD_A: begin
                 fn = INPUT_A;
                 if (enter) begin
                     next_state = LOAD_B;
-                    reg_ctrl = 2'b01;
-                end else begin
-                    next_state = LOAD_A;
-                end
+                    next_reg_ctrl = 2'b01;
+                end 
             end
             
             LOAD_B:begin
                 fn = INPUT_B;
                 if (enter) begin
                     next_state = ADD;
-                    reg_ctrl = 2'b10;
-                end else begin
-                    next_state = LOAD_B;
-                end
+                    next_reg_ctrl = 2'b10;
+                end 
             end
             
             ADD: begin
-                if (enter) begin
+                next_reg_ctrl = 2'b0;
+                if (enter) 
                     next_state = SUB;
-                    reg_ctrl = 2'b11;
-                end else begin
-                    next_state = ADD;
-                    reg_ctrl = 2'b11;
-                end
-                if (sign) begin
+                if (signed_op) begin
                     fn = S_ADD;
                 end else begin
                     fn = U_ADD;
@@ -68,14 +73,11 @@ typedef enum logic [2:0] {
             end
             
             SUB: begin
+                next_reg_ctrl = 2'b0;
                 if(enter) begin
                     next_state = MOD3;
-                    reg_ctrl = 2'b11;
-                end else begin
-                    next_state = SUB;
-                    reg_ctrl = 2'b11;
-                end
-                if (sign) begin
+                end 
+                if (signed_op) begin
                     fn = S_SUB;
                 end else begin
                     fn = U_SUB;
@@ -83,14 +85,11 @@ typedef enum logic [2:0] {
             end
             
             MOD3: begin
+                next_reg_ctrl = 2'b0;
                 if(enter) begin
                     next_state = ADD;
-                    reg_ctrl = 2'b11;
-                end else begin
-                    next_state = MOD3;
-                    reg_ctrl = 2'b11;
-                end
-                if (sign) begin
+                end 
+                if (signed_op) begin
                     fn = S_MOD3;
                 end else begin
                     fn = U_MOD3;
@@ -99,8 +98,8 @@ typedef enum logic [2:0] {
             
             default: begin
                 fn = INPUT_A;
-                next_state = LOAD_A;
             end
           endcase
     end
+
 endmodule
