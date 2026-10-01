@@ -7,6 +7,34 @@ set_property PACKAGE_PIN E3 [get_ports clk]
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
 create_clock -add -name clk -period 10.00 -waveform {0 5} [get_ports clk]
 
+## Switches
+#NET "sw<0>"			LOC = "U9"	| IOSTANDARD = "LVCMOS33";		
+#Bank = 34, Pin name = IO_L21P_T3_DQS_34,					Sch name = SW0
+set_property PACKAGE_PIN U9 [get_ports {alu_input[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[0]}]
+#NET "sw<1>"			LOC = "U8"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_25_34,							Sch name = SW1
+set_property PACKAGE_PIN U8 [get_ports {alu_input[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[1]}]
+#NET "sw<2>"			LOC = "R7"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L23P_T3_34,						Sch name = SW2
+set_property PACKAGE_PIN R7 [get_ports {alu_input[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[2]}]
+#NET "sw<3>"			LOC = "R6"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L19P_T3_34,						Sch name = SW3
+set_property PACKAGE_PIN R6 [get_ports {alu_input[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[3]}]
+#NET "sw<4>"			LOC = "R5"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L19N_T3_VREF_34,					Sch name = SW4
+set_property PACKAGE_PIN R5 [get_ports {alu_input[4]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[4]}]
+#NET "sw<5>"			LOC = "V7"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L20P_T3_34,						Sch name = SW5
+set_property PACKAGE_PIN V7 [get_ports {alu_input[5]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[5]}]
+#NET "sw<6>"		  LOC = "V6"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L20N_T3_34,						Sch name = SW6
+set_property PACKAGE_PIN V6 [get_ports {alu_input[6]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[6]}]
+#NET "sw<7>"			LOC = "V5"	| IOSTANDARD = "LVCMOS33";		#Bank = 34, Pin name = IO_L10P_T1_34,						Sch name = SW7
+set_property PACKAGE_PIN V5 [get_ports {alu_input[7]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {alu_input[7]}]
+
+
 ## Buttons
 #NET "btnCpuReset"		LOC = "C12"	| IOSTANDARD = "LVCMOS33";	
 set_property PACKAGE_PIN C12 [get_ports {rst}]					
@@ -62,13 +90,5 @@ set_property PACKAGE_PIN M3 [get_ports {anode[2]}]
 set_property PACKAGE_PIN N5 [get_ports {anode[3]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {anode[3]}]
 
-## maybe?
-#Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC
-set_property PACKAGE_PIN E16 [get_ports b_enter]
-	set_property IOSTANDARD LVCMOS33 [get_ports b_enter]
-
-#Bank = CONFIG, Pin name = IO_L15N_T2_DQS_DOUT_CSO_B_14,	Sch name = BTNL
-set_property PACKAGE_PIN T16 [get_ports b_sign]
-	set_property IOSTANDARD LVCMOS33 [get_ports b_sign]
 
 
