@@ -47,22 +47,20 @@ module alu_ctrl (
         case (current_state)
             LOAD_A: begin
                 fn = INPUT_A;
-                if (enter) begin
+                next_reg_ctrl = 2'b01;
+                if (enter)
                     next_state = LOAD_B;
-                    next_reg_ctrl = 2'b01;
-                end 
             end
             
             LOAD_B:begin
                 fn = INPUT_B;
-                if (enter) begin
+                next_reg_ctrl = 2'b10;
+                if (enter) 
                     next_state = ADD;
-                    next_reg_ctrl = 2'b10;
-                end 
             end
             
             ADD: begin
-                next_reg_ctrl = 2'b0;
+                next_reg_ctrl = 2'b11;
                 if (enter) 
                     next_state = SUB;
                 if (signed_op) begin
@@ -73,7 +71,7 @@ module alu_ctrl (
             end
             
             SUB: begin
-                next_reg_ctrl = 2'b0;
+                next_reg_ctrl = 2'b11;
                 if(enter) begin
                     next_state = MOD3;
                 end 
@@ -85,7 +83,7 @@ module alu_ctrl (
             end
             
             MOD3: begin
-                next_reg_ctrl = 2'b0;
+                next_reg_ctrl = 2'b11;
                 if(enter) begin
                     next_state = ADD;
                 end 
