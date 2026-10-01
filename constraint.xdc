@@ -45,3 +45,14 @@ set_property PACKAGE_PIN M3 [get_ports {anode[2]}]
 #Bank = 34, Pin name = IO_L13_T2_MRCC_34,					Sch name = AN3
 set_property PACKAGE_PIN N5 [get_ports {anode[3]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {anode[3]}]
+
+## maybe?
+#Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC
+set_property PACKAGE_PIN E16 [get_ports b_enter]
+	set_property IOSTANDARD LVCMOS33 [get_ports b_enter]
+
+#Bank = CONFIG, Pin name = IO_L15N_T2_DQS_DOUT_CSO_B_14,	Sch name = BTNL
+set_property PACKAGE_PIN T16 [get_ports b_sign]
+	set_property IOSTANDARD LVCMOS33 [get_ports b_sign]
+
+
