@@ -47,7 +47,7 @@ set_property PACKAGE_PIN E16 [get_ports {b_enter}]
 #Bank = 15, Pin name = IO_L11N_T1_SRCC_15,					Sch name = BTNC
 
 #NET "btnL"				LOC = "T16"	| IOSTANDARD = "LVCMOS33";		
-set_property PACKAGE_PIN T15 [get_ports {b_sign}]					
+set_property PACKAGE_PIN T16 [get_ports {b_sign}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {b_sign}]
 #Bank = CONFIG, Pin name = IO_L15N_T2_DQS_DOUT_CSO_B_14,	Sch name = BTNL
 
